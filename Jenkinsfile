@@ -68,3 +68,50 @@ pipeline {
         }
     }
 }
+
+post {
+        success {
+            emailext (
+                subject: "✅ SUCCESS: ${JOB_NAME} #${BUILD_NUMBER}",
+                body: """
+Hi Team,
+
+Good news 🎉
+
+Pipeline completed successfully.
+
+Job Name   : ${JOB_NAME}
+Build No   : ${BUILD_NUMBER}
+Status     : SUCCESS
+Build URL  : ${BUILD_URL}
+
+Regards,
+Jenkins
+""",
+                to: "prathimaprati504@gmail.com"
+            )
+        }
+
+        failure {
+            emailext (
+                subject: "❌ FAILURE: ${JOB_NAME} #${BUILD_NUMBER}",
+                body: """
+Hi Team,
+
+Pipeline has FAILED ❌
+
+Job Name   : ${JOB_NAME}
+Build No   : ${BUILD_NUMBER}
+Status     : FAILURE
+Build URL  : ${BUILD_URL}
+
+Please check logs for details.
+
+Regards,
+Jenkins
+""",
+                to: "prathimaprati504@gmail.com"
+            )
+        }
+    }
+}
